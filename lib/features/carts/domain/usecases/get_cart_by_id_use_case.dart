@@ -15,11 +15,11 @@ class GetCartById implements UseCase<Cart, CartIdParams> {
     return await repository.getCartById(params.cartId);
   }
 }
-class CartIdParams extends Equatable {
-  final int cartId;
+// class CartIdParams extends Equatable {
+//   final int cartId;
 
-  const CartIdParams({required this.cartId});
+//   const CartIdParams({required this.cartId});
 
-  @override
-  List<Object> get props => [cartId];
-}
+//   @override
+//   List<Object> get props => [cartId];
+// }

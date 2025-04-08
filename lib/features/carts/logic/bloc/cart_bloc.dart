@@ -15,7 +15,6 @@ import 'package:chic_lyne/features/carts/domain/usecases/increment_product_quant
 import 'package:chic_lyne/features/carts/domain/usecases/remove_product_from_cart_use_case.dart';
 import 'package:chic_lyne/features/carts/domain/usecases/update_cart_use_case.dart';
 import 'package:equatable/equatable.dart';
-
 part 'cart_event.dart';
 part 'cart_state.dart';
 

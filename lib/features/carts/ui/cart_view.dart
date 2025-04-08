@@ -246,12 +246,8 @@
 //   }
 // }
 import 'package:chic_lyne/core/di/dependency_injection.dart';
-import 'package:chic_lyne/features/carts/data/models/cart_model.dart';
-import 'package:chic_lyne/features/carts/domain/usecases/add_cart_use_case.dart';
-import 'package:chic_lyne/features/carts/domain/usecases/get_all_carts.dart';
+import 'package:chic_lyne/features/carts/domain/entities/cart.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
-import 'package:chic_lyne/features/carts/logic/bloc/cart_event.dart';
-import 'package:chic_lyne/features/carts/logic/bloc/cart_state.dart';
 import 'package:chic_lyne/features/carts/ui/widgets/cart_item_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -262,17 +258,14 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CartBloc(
-        getAllCartsUseCase: getIt<GetAllCartsUseCase>(),
-        addCartUseCase: getIt<AddCartUseCase>(),
-      )..add(FetchCartsEvent()),
+      create: (context) => getIt<CartBloc>()..add(GetAllCartsEvent()),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Cart'),
           actions: [
             BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
-                if (state is CartLoadedState && state.carts.isNotEmpty) {
+                if (state is AllCartsLoaded && state.carts.isNotEmpty) {
                   return IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () => context.read<CartBloc>().add(
@@ -288,7 +281,7 @@ class CartView extends StatelessWidget {
         ),
         body: BlocConsumer<CartBloc, CartState>(
           listener: (context, state) {
-            if (state is CartErrorState) {
+            if (state is CartError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
@@ -298,15 +291,15 @@ class CartView extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state is CartLoadingState) {
+            if (state is CartLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is CartErrorState) {
+            if (state is CartError) {
               return Center(child: Text(state.message));
             }
 
-            if (state is CartLoadedState) {
+            if (state is AllCartsLoaded) {
               return _buildCartContent(context, state.carts);
             }
 
@@ -317,7 +310,7 @@ class CartView extends StatelessWidget {
     );
   }
 
-  Widget _buildCartContent(BuildContext context, List<Carts> carts) {
+  Widget _buildCartContent(BuildContext context, List<Cart> carts) {
     if (carts.isEmpty) {
       return _buildEmptyCartView(context);
     }
@@ -382,7 +375,7 @@ class CartView extends StatelessWidget {
     );
   }
 
-  Widget _buildCartSummary(BuildContext context, List<Carts> carts) {
+  Widget _buildCartSummary(BuildContext context, List<Cart> carts) {
     // Calculate totals across all carts
     double subtotal = carts.fold(0, (sum, cart) => sum + (cart.total ?? 0));
     double discount = carts.fold(0, (sum, cart) => 

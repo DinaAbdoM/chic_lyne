@@ -16,12 +16,12 @@ class DecrementProductQuantity implements UseCase<Cart, CartProductParams> {
   }
 }
 
-class CartProductParams extends Equatable {
-  final int cartId;
-  final int productId;
+// class CartProductParams extends Equatable {
+//   final int cartId;
+//   final int productId;
 
-  const CartProductParams({required this.cartId, required this.productId});
+//   const CartProductParams({required this.cartId, required this.productId});
 
-  @override
-  List<Object> get props => [cartId, productId];
-}
+//   @override
+//   List<Object> get props => [cartId, productId];
+// }

@@ -15,11 +15,11 @@ class DeleteCart implements UseCase<bool, CartIdParams> {
   }
 }
 
-class CartIdParams extends Equatable {
-  final int cartId;
+// class CartIdParams extends Equatable {
+//   final int cartId;
 
-  const CartIdParams({required this.cartId});
+//   const CartIdParams({required this.cartId});
 
-  @override
-  List<Object> get props => [cartId];
-}
+//   @override
+//   List<Object> get props => [cartId];
+// }

@@ -121,15 +121,17 @@ Future<void> initDependencies() async {
     throw Exception('Dependency injection failed: $e');
   }
   //! External
-  getIt.registerLazySingleton(() {
-    final dio = Dio();
-    dio.options.baseUrl = 'https://dummyjson.com';
-    dio.options.connectTimeout = const Duration(seconds: 5);
-    dio.options.receiveTimeout = const Duration(seconds: 5);
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-    return dio;
-  });
+  if (!getIt.isRegistered<Dio>()) {
+    getIt.registerLazySingleton(() {
+      final dio = Dio();
+      dio.options.baseUrl = 'https://dummyjson.com';
+      dio.options.connectTimeout = const Duration(seconds: 5);
+      dio.options.receiveTimeout = const Duration(seconds: 5);
+      dio.options.headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+      return dio;
+    });
+  }
 }

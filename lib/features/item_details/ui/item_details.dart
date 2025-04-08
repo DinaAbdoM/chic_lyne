@@ -1,4 +1,6 @@
 import 'package:chic_lyne/core/di/dependency_injection.dart';
+import 'package:chic_lyne/features/carts/data/models/cart_model.dart';
+import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
 import 'package:chic_lyne/features/carts/logic/cubit/cart_cubit.dart';
 import 'package:chic_lyne/features/home/data/models/product_model.dart';
 import 'package:chic_lyne/features/item_details/ui/components/add_to_cart_button_component.dart';
@@ -9,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemDetails extends StatefulWidget {
-  final Products product;
+  final Productss product;
   const ItemDetails({super.key, required this.product});
 
   @override
@@ -89,20 +91,23 @@ class _ItemDetailsState extends State<ItemDetails> {
                         onIncrement: incrementQuantity,
                         onDecrement: decrementQuantity,
                       ),
-                      SizedBox(height: isSmallScreen ? 40 : 80),
+                      AddToBagButtonComponent(padding: contentPadding, fontSize: buttonTextFontSize, price: widget.product.price ?? 0, quantity: quantity, cartModelProduct: ,product: widget.product,)
+                     , SizedBox(height: isSmallScreen ? 40 : 80),
                     ],
                   ),
                 ),
               ),
               BlocProvider(
-                create: (_) => getIt<CartCubit>(),
-                child: AddToBagButtonComponent(
-                  product: widget.product,
-                  padding: contentPadding,
-                  fontSize: buttonTextFontSize,
-                  price: widget.product.price ?? 0,
-                  quantity: quantity,
-                ),
+                create: (_) => getIt<CartBloc>(),
+                child: Container(),
+                // child: AddToBagButtonComponent(
+                //   cartModelProduct: ,
+                //   product: widget.product,
+                //   padding: contentPadding,
+                //   fontSize: buttonTextFontSize,
+                //   price: widget.product.price ?? 0,
+                //   quantity: quantity,
+                // ),
               ),
             ],
           ),

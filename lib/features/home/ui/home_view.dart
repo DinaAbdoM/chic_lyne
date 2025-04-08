@@ -19,7 +19,9 @@ class HomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RawBannerSection(),
-                SearchTextField(),
+                SearchTextField(onSubmitted: (value) {
+                  
+                }),
                 CategoriesSection(),
                 TopSellingSection(),
                 NewInSection(),

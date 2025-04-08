@@ -14,7 +14,7 @@ class ProductInfoComponent extends StatefulWidget {
   final double priceFontSize;
   final double descriptionFontSize;
   final bool isSmallScreen;
-  final Products product;
+  final Productss product;
   final int quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;

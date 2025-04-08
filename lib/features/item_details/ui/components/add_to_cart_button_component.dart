@@ -1,5 +1,7 @@
 import 'package:chic_lyne/core/di/dependency_injection.dart';
 import 'package:chic_lyne/features/carts/data/models/cart_model.dart';
+import 'package:chic_lyne/features/carts/domain/entities/cart.dart';
+import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
 import 'package:chic_lyne/features/carts/logic/cubit/cart_cubit.dart';
 import 'package:chic_lyne/features/carts/ui/cart_view.dart';
 import 'package:chic_lyne/features/home/data/models/product_model.dart';
@@ -42,23 +44,23 @@ class AddToBagButtonComponent extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             try {
-              final cartCubit = getIt<CartCubit>();
-              final cartProduct = CartProduct(
-                id: product.id ?? 0,
-                title: product.title ?? '',
-                price: (product.price ?? 0).toInt(),
-                quantity: quantity,
-                total: ((product.price ?? 0) * quantity).toInt(),
-                discountPercentage: product.discountPercentage ?? 0.0,
-                discountedPrice:
-                    ((product.price ?? 0) *
-                            (1 - (product.discountPercentage ?? 0) / 100) *
-                            quantity)
-                        .toInt(),
-                thumbnail: product.thumbnail ?? '',
-              );
+              final cartCubit = getIt<CartBloc>();
+              // final cartProduct = Product(
+              //   id: product.id ?? 0,
+              //   title: product.title ?? '',
+              //   price: (product.price ?? 0).toInt(),
+              //   quantity: quantity,
+              //   total: ((product.price ?? 0) * quantity).toInt(),
+              //   discountPercentage: product.discountPercentage ?? 0.0,
+              //   discountedPrice:
+              //       ((product.price ?? 0) *
+              //               (1 - (product.discountPercentage ?? 0) / 100) *
+              //               quantity)
+              //           .toInt(),
+              //   thumbnail: product.thumbnail ?? '',
+              // );
 
-              await cartCubit.addProduct(cartProduct);
+              // await cartCubit.addProduct(cartProduct);
               Navigator.push(
                 context,
                 MaterialPageRoute(

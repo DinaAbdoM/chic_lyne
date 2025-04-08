@@ -35,11 +35,11 @@
 //     );
 //   }
 // }
-import 'package:chic_lyne/features/carts/data/models/cart_model.dart';
+import 'package:chic_lyne/features/carts/domain/entities/cart.dart';
 import 'package:flutter/material.dart';
 
 class CartItemTile extends StatelessWidget {
-  final Products product;  // Changed from CartModel to Products since we're displaying individual products
+  final Product product;  // Changed from CartModel to Products since we're displaying individual products
   final int cartId;       // Added cartId to handle cart-specific operations
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;

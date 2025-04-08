@@ -101,6 +101,16 @@ class CartIdParams extends Equatable {
   List<Object> get props => [cartId];
 }
 
+class CartProductParams extends Equatable {
+  final int cartId;
+  final int productId;
+
+  const CartProductParams({required this.cartId, required this.productId});
+
+  @override
+  List<Object> get props => [cartId, productId];
+}
+
 // In cart use case parameter files
 // class CartIdParams extends Equatable {
 //   final int cartId; 

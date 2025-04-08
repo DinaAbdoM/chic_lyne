@@ -1,6 +1,5 @@
 import 'package:chic_lyne/core/di/dependency_injection.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
-import 'package:chic_lyne/features/carts/logic/bloc/cart_event.dart';
 import 'package:chic_lyne/features/category/logic/cubit/category_cubit.dart';
 import 'package:chic_lyne/features/fliter_view/logic/filter_cubit/filter_cubit.dart';
 import 'package:chic_lyne/features/fliter_view/logic/sortby_cubit/sort_by_cubit.dart';
@@ -74,7 +73,7 @@ class MyApp extends StatelessWidget {
               //   },
               // ),
               BlocProvider(
-                create: (_) => getIt<CartBloc>()..add(()),
+                create: (_) => getIt<CartBloc>()..add(GetAllCartsEvent()),
               ),
             ],
             child: MaterialApp(
