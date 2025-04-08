@@ -91,8 +91,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                         onIncrement: incrementQuantity,
                         onDecrement: decrementQuantity,
                       ),
-                      AddToBagButtonComponent(padding: contentPadding, fontSize: buttonTextFontSize, price: widget.product.price ?? 0, quantity: quantity, cartModelProduct: ,product: widget.product,)
-                     , SizedBox(height: isSmallScreen ? 40 : 80),
+                      // AddToBagButtonComponent(padding: contentPadding, fontSize: buttonTextFontSize, price: widget.product.price ?? 0, quantity: quantity, cartModelProduct: ,product: widget.product,)
+                    
+                      SizedBox(height: isSmallScreen ? 40 : 80),
                     ],
                   ),
                 ),
