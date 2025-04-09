@@ -12,7 +12,7 @@
 //   @GET("category/{slug}")
 //   Future<ProductScip> getProductsByCategory(@Path("data") String data);
 // }
-import 'package:chic_lyne/core/constants/app_constants.dart';
+import 'package:chic_lyne/core/network/constants/app_constants.dart';
 import 'package:chic_lyne/features/home/data/models/category_model.dart';
 import 'package:chic_lyne/features/home/data/models/product_model.dart';
 import 'package:dio/dio.dart';

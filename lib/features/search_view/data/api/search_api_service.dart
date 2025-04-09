@@ -1,5 +1,6 @@
-import 'package:chic_lyne/core/constants/app_constants.dart';
+import 'package:chic_lyne/core/network/constants/app_constants.dart';
 import 'package:chic_lyne/features/search_view/data/models/search_products_models.dart';
+import 'package:chic_lyne/features/search_view/data/models/search_query_params.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -11,5 +12,5 @@ abstract class SearchApiService {
   factory SearchApiService(Dio dio, {String baseUrl}) = _SearchApiService;
 
   @GET("/products/search")
-  Future<SearchProductResponseModel> searchProducts(@Query("q") String query);
+  Future<SearchProductResponseModel> searchProducts(@Queries() SearchQueryParams params);
 }

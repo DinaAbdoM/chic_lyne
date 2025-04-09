@@ -36,6 +36,4 @@ static const String splashView = '/';
   static const String orderShippingRequest = '/order-shipping-request';
   static const String orderShippingRequestDetails = '/order-shipping-request-details';
 
-
-  
 }

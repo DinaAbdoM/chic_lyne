@@ -28,7 +28,7 @@ class FilterViews extends StatelessWidget {
               const FilterRowHeader(),
               const MyDropdowns(),
               SizedBox(height: 20.h),
-              // SearchTextField(), 
+              // SearchTextField(),
               BlocBuilder<SearchProductsCubit, SearchProductsState>(
                 builder: (context, searchState) {
                   if (searchState is SearchLoading) {
@@ -37,27 +37,17 @@ class FilterViews extends StatelessWidget {
                     if (searchState.products.isEmpty) {
                       return Expanded(child: NoResultView());
                     } else {
-                      return BlocBuilder<SortByCubit, SortByState>(
-                        builder: (context, sortState) {
-                          List<Product>? products = searchState.products;
-
-                          if (sortState is SortByLoaded) {
-                            products = sortState.result.products?.cast<Product>();
-                          }
-
-                          final productCount = products?.length ?? 0;
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '$productCount Result Found',
-                                style: TextStyles.font15BlackBold,
-                              ),
-                              ResultItem(products: products),
-                            ],
-                          );
-                        },
+                      List<Product>? products = searchState.products;
+                      final productCount = products?.length ?? 0;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$productCount Result Found',
+                            style: TextStyles.font15BlackBold,
+                          ),
+                          ResultItem(products: products),
+                        ],
                       );
                     }
                   } else if (searchState is SearchError) {
@@ -68,7 +58,10 @@ class FilterViews extends StatelessWidget {
                       children: [
                         Text(
                           'Shop By Categories',
-                          style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         // verticalSpace(20.h),
                         // Expanded(child: _buildCategoriesGrid()),

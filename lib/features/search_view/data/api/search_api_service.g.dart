@@ -20,9 +20,12 @@ class _SearchApiService implements SearchApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<SearchProductResponseModel> searchProducts(String query) async {
+  Future<SearchProductResponseModel> searchProducts(
+    SearchQueryParams params,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'q': query};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(params.toJson());
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<SearchProductResponseModel>(

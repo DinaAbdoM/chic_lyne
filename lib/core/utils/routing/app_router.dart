@@ -6,7 +6,9 @@ import 'package:chic_lyne/core/utils/routing/routes.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
 import 'package:chic_lyne/features/carts/ui/cart_view.dart';
 import 'package:chic_lyne/features/category/logic/cubit/category_cubit.dart';
+import 'package:chic_lyne/features/fliter_view/ui/fliter_views.dart';
 import 'package:chic_lyne/features/home/ui/home_view.dart';
+import 'package:chic_lyne/features/search_view/logic/cubit/search_products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +29,14 @@ class AppRouter {
                 create: (_) => getIt<CategoryCubit>()..fetchCategories(),
 
                 child: HomeView(),
+              ),
+        );
+      case Routes.search:
+        return _buildRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => getIt<SearchProductsCubit>()..searchProducts(args as String),
+                child: FilterViews(),
               ),
         );
       default:
