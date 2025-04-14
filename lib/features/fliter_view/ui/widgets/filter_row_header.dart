@@ -9,11 +9,11 @@ class FilterRowHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         ResponsiveBackButton(onPressed: () => Navigator.pop(context)),
         SizedBox(width: 10.w),
-        Expanded(flex: 2, child: SearchTextField(suffixIcon: Icons.close)),
+        SearchTextField(suffixIcon: Icons.close),
       ],
     );
   }

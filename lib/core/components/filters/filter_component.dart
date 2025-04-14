@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterComponent extends StatelessWidget {
-  const FilterComponent({Key? key}) : super(key: key);
+  const FilterComponent({super.key});
 
   void _showColorFilterSheet(BuildContext context) {
     showModalBottomSheet(

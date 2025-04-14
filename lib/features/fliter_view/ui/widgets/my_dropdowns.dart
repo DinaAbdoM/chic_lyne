@@ -227,12 +227,13 @@
 // }
 import 'package:chic_lyne/features/fliter_view/logic/filter_cubit/filter_cubit.dart';
 import 'package:chic_lyne/features/fliter_view/ui/widgets/custom_bottom_sheet.dart';
+import 'package:chic_lyne/features/search_view/logic/cubit/search_products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyDropdowns extends StatelessWidget {
-  const MyDropdowns({super.key});
+  const   MyDropdowns({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -246,10 +247,18 @@ class MyDropdowns extends StatelessWidget {
         'Newest',
         'Lowest - Highest Price',
         'Highest - Lowest Price',
+        'Title',
       ],
       ['Men', 'Women', 'Kids'],
+      ['Ascending', 'Descending'],
     ];
-    final List<String> defaultTitles = ['Deals', 'Price', 'Sort by', 'Gender'];
+    final List<String> defaultTitles = [
+      'Deals',
+      'Price',
+      'Sort by',
+      'Gender',
+      'Order',
+    ];
     return Row(
       children: [
         BlocBuilder<FilterCubit, FilterState>(
@@ -272,24 +281,28 @@ class MyDropdowns extends StatelessWidget {
               ), // الأيقونة
               onSelected:
                   (bool value) => filterCubit.updateSelectedIndex(
-                    4,
+                    5,
                   ), // عند النقر على FilterChip
             );
           },
         ),
         SizedBox(width: 8.w),
-        ...List.generate(4, (index) {
+        ...List.generate(5, (index) {
           return Expanded(
             child: GestureDetector(
               onTap: () {
+                final searchProductsCubit = context.read<SearchProductsCubit>();
                 showModalBottomSheet(
                   context: context,
                   builder:
-                      (context) => CustomBottomSheet(
-                        containerIndex: index,
-                        allItems: allItems[index],
-                        defaultTitle: defaultTitles[index],
-                        selectedItem: filterState.selectedItems[index],
+                      (context) => BlocProvider.value(
+                        value: searchProductsCubit,
+                        child: CustomBottomSheet(
+                          containerIndex: index,
+                          allItems: allItems[index],
+                          defaultTitle: defaultTitles[index],
+                          selectedItem: filterState.selectedItems[index],
+                        ),
                       ),
                 );
                 filterCubit.updateSelectedIndex(index);

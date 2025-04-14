@@ -3,10 +3,10 @@ import 'package:chic_lyne/features/carts/domain/entities/cart.dart';
 
 extension CartModelMapper on CartModel {
   Cart toEntity() {
-    if (this.carts != null && this.carts!.isNotEmpty) {
+    if (carts != null && carts!.isNotEmpty) {
       return Cart(
-        id: this.carts![0].id,
-        products: this.carts![0].products?.map((productModel) => Product(
+        id: carts![0].id,
+        products: carts![0].products?.map((productModel) => Product(
           id: productModel.id,
           title: productModel.title,
           price: productModel.price,
@@ -16,11 +16,11 @@ extension CartModelMapper on CartModel {
           discountedTotal: productModel.discountedTotal,
           thumbnail: productModel.thumbnail,
         )).toList(),
-        total: this.carts![0].total,
-        discountedTotal: this.carts![0].discountedTotal,
-        userId: this.carts![0].userId,
-        totalProducts: this.carts![0].totalProducts,
-        totalQuantity: this.carts![0].totalQuantity,
+        total: carts![0].total,
+        discountedTotal: carts![0].discountedTotal,
+        userId: carts![0].userId,
+        totalProducts: carts![0].totalProducts,
+        totalQuantity: carts![0].totalQuantity,
       );
     }
     
@@ -31,8 +31,8 @@ extension CartModelMapper on CartModel {
 extension CartsModelMapper on Carts {
   Cart toEntity() {
     return Cart(
-      id: this.id,
-      products: this.products?.map((productModel) => Product(
+      id: id,
+      products: products?.map((productModel) => Product(
         id: productModel.id,
         title: productModel.title,
         price: productModel.price,
@@ -42,11 +42,11 @@ extension CartsModelMapper on Carts {
         discountedTotal: productModel.discountedTotal,
         thumbnail: productModel.thumbnail,
       )).toList(),
-      total: this.total,
-      discountedTotal: this.discountedTotal,
-      userId: this.userId,
-      totalProducts: this.totalProducts,
-      totalQuantity: this.totalQuantity,
+      total: total,
+      discountedTotal: discountedTotal,
+      userId: userId,
+      totalProducts: totalProducts,
+      totalQuantity: totalQuantity,
     );
   }
 }

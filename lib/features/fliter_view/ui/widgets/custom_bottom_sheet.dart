@@ -1,5 +1,6 @@
+
 import 'package:chic_lyne/features/fliter_view/logic/filter_cubit/filter_cubit.dart';
-import 'package:chic_lyne/features/fliter_view/logic/sortby_cubit/sort_by_cubit.dart';
+import 'package:chic_lyne/features/search_view/logic/cubit/search_products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ class CustomBottomSheet extends StatelessWidget {
                 onPressed: () {
                   context.read<FilterCubit>().clearSelectedItem(
                     containerIndex,
-                    ['Deals', 'Price', 'Sort by', 'Gender'],
+                    ['Deals', 'Price', 'Sort by', 'Gender', 'Order'],
                   );
                   Navigator.pop(context);
                 },
@@ -66,7 +67,6 @@ class CustomBottomSheet extends StatelessWidget {
                   vertical: 5,
                 ),
 
-
                 child: Material(
                   color: isSelected ? Colors.deepPurple : Colors.grey[300],
                   borderRadius: BorderRadius.circular(18.0),
@@ -76,15 +76,14 @@ class CustomBottomSheet extends StatelessWidget {
                       Navigator.pop(context);
                       if (containerIndex == 1) {
                         // Price
-                        context.read<SortByCubit>().getSortBy(
-                          'price',
-                          itemText == 'Min' ? 'asc' : 'desc',
-                        );
                       } else if (containerIndex == 2) {
-                        // Sort by
-                        context.read<SortByCubit>().getSortBy(
-                          'rating',
-                          itemText == 'Lowest - Highest Price' ? 'asc' : 'desc',
+                        context.read<SearchProductsCubit>().setSortBy(
+                          itemText.toLowerCase(),
+                        );
+                      } else if (containerIndex == 4) {
+                        bool isDescending = itemText == 'Descending';
+                        context.read<SearchProductsCubit>().setDescending(
+                          isDescending,
                         );
                       }
                     },
@@ -113,9 +112,6 @@ class CustomBottomSheet extends StatelessWidget {
                     ),
                   ),
                 ),
-             
-             
-             
               );
             },
           ),

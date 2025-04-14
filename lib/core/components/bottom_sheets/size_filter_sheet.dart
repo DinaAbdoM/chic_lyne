@@ -8,9 +8,9 @@ class SizeFilterSheet extends StatelessWidget {
   final List<String> sizeOptions;
   
   const SizeFilterSheet({
-    Key? key,
+    super.key,
     required this.sizeOptions,
-  }) : super(key: key);
+  });
   
   @override
   Widget build(BuildContext context) {

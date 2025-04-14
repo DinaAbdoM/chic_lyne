@@ -56,4 +56,14 @@ class TextStyles {
       fontSize: fontSize,
     );
   }
+  static TextStyle font14BlackBold = TextStyle(
+    color: Colors.black,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle font12RedBold = TextStyle(
+    color: Colors.red,
+    fontSize: 12.sp,
+    fontWeight: FontWeight.bold,
+  );
 }

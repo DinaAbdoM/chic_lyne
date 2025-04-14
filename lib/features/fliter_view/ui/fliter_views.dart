@@ -1,11 +1,7 @@
-import 'package:chic_lyne/core/helpers/spacing.dart';
 import 'package:chic_lyne/core/theming/styles.dart';
-import 'package:chic_lyne/features/fliter_view/logic/sortby_cubit/sort_by_cubit.dart';
-import 'package:chic_lyne/features/fliter_view/logic/sortby_cubit/sort_by_state.dart';
 import 'package:chic_lyne/features/fliter_view/ui/widgets/filter_row_header.dart';
 import 'package:chic_lyne/features/fliter_view/ui/widgets/my_dropdowns.dart';
 import 'package:chic_lyne/features/fliter_view/ui/widgets/result_item.dart';
-import 'package:chic_lyne/features/home/ui/widgets/header_section/widgets/search_text_field.dart';
 import 'package:chic_lyne/features/search_view/data/models/search_products_models.dart';
 import 'package:chic_lyne/features/search_view/logic/cubit/search_products_cubit.dart';
 import 'package:chic_lyne/features/search_view/ui/search_error_view/ui/no_result_view.dart';
@@ -35,10 +31,10 @@ class FilterViews extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   } else if (searchState is SearchLoaded) {
                     if (searchState.products.isEmpty) {
-                      return Expanded(child: NoResultView());
+                      return NoResultView();
                     } else {
                       List<Product>? products = searchState.products;
-                      final productCount = products?.length ?? 0;
+                      final productCount = products.length ?? 0;
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

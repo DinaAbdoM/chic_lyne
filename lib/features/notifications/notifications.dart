@@ -5,6 +5,6 @@ class Notifications extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Notifications')));
+    return Scaffold(body: Center(child: Text('Notifications')));
   }
 }

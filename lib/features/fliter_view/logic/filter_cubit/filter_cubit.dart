@@ -10,11 +10,12 @@ class FilterCubit extends Cubit<FilterState> {
             'Price',
             'Sort by',
             'Gender',
+            'Order',
           ], // عناوين الفلاتر الافتراضية
           selectedIndex: null, // لا يوجد عنصر محدد في البداية
           selectedFilterCount: 0, // عدد الفلاتر المحددة في البداية صفر
           selectedOptions: List.generate(
-            4,
+            5,
             (_) => null,
           ), // قائمة لتتبع الخيارات المحددة لكل فلتر (null يعني لا يوجد خيار)
         ),

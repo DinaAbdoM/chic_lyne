@@ -1,3 +1,4 @@
+import 'package:chic_lyne/core/network/dio_client.dart';
 import 'package:chic_lyne/core/network/network_info.dart';
 import 'package:chic_lyne/core/utils/cart_utils.dart';
 import 'package:chic_lyne/features/carts/data/datasources/cart_remote_datasource.dart';
@@ -16,9 +17,20 @@ import 'package:chic_lyne/features/fliter_view/logic/filter_cubit/filter_cubit.d
 import 'package:chic_lyne/features/fliter_view/logic/sortby_cubit/sort_by_cubit.dart';
 import 'package:chic_lyne/features/home/data/apis/api_service.dart';
 import 'package:chic_lyne/features/home/data/repos/category_repository.dart';
+import 'package:chic_lyne/features/new_in/data/repositories/product_repository_impl.dart';
+import 'package:chic_lyne/features/new_in/data/services/api_service.dart';
+import 'package:chic_lyne/features/new_in/data/services/product_service.dart';
+import 'package:chic_lyne/features/new_in/domain/usecases/get_new_products_usecase.dart';
+import 'package:chic_lyne/features/new_in/domain/repositories/product_repository.dart';
+import 'package:chic_lyne/features/new_in/presentation/cubit/products_cubit.dart';
 import 'package:chic_lyne/features/search_view/data/api/search_api_service.dart';
 import 'package:chic_lyne/features/search_view/data/repo/product_repository.dart';
 import 'package:chic_lyne/features/search_view/logic/cubit/search_products_cubit.dart';
+import 'package:chic_lyne/features/top_selling/data/datasources/models/top_selling_remote_data_source.dart';
+import 'package:chic_lyne/features/top_selling/data/repositories/top_selling_repository_impl.dart';
+import 'package:chic_lyne/features/top_selling/domain/repositories/top_selling_repository.dart';
+import 'package:chic_lyne/features/top_selling/domain/usecases/get_top_selling_products.dart';
+import 'package:chic_lyne/features/top_selling/presentation/top_selling_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -34,7 +46,8 @@ final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
   // 1. Initialize Dio with proper configuration
-  getIt.registerLazySingleton<Dio>(() => CartUtils.createDio());
+  getIt.registerLazySingleton<DioClient>(() => DioClient());
+  // getIt.registerLazySingleton<Dio>(() => CartUtils.createDio());
   // 2. Filter Feature Dependencies
   getIt.registerLazySingleton<SortByApiService>(
     () => SortByApiService(getIt()),
@@ -49,7 +62,7 @@ Future<void> initDependencies() async {
     () => CategoryRepository(getIt()),
   );
   getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
-  // 2. Search Feature Dependencies
+  // 3. Search Feature Dependencies
   getIt.registerLazySingleton<SearchApiService>(
     () => SearchApiService(getIt()),
   );
@@ -134,4 +147,34 @@ Future<void> initDependencies() async {
       return dio;
     });
   }
+  // Top Selling
+  getIt.registerSingleton<TopSellingRemoteDataSource>(
+    TopSellingRemoteDataSourceImpl(dioClient: getIt()),
+  );
+  getIt.registerSingleton<TopSellingRepository>(
+    TopSellingRepositoryImpl(remoteDataSource: getIt()),
+  );
+  // getIt.registerSingleton<GetTopSellingProducts>(
+  //   GetTopSellingProducts(repository: getIt()),
+  // );
+
+  getIt.registerFactory(() => GetTopSellingProducts(repository: getIt()));
+
+  getIt.registerFactory(() => TopSellingBloc(getTopSellingProducts: getIt()));
+  // New In
+  // Cubits / Blocs
+  getIt.registerFactory(() => NweInProductsCubit(getIt()));
+
+  // Use cases
+  getIt.registerLazySingleton(() => GetNewProductsUseCase(getIt()));
+
+  // Repository
+  getIt.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(getIt()),
+  );
+
+  // Services
+  getIt.registerLazySingleton(() => ProductService());
+
+  getIt.registerLazySingleton(() => ApiService());
 }

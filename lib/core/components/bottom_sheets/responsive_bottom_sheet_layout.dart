@@ -7,12 +7,12 @@ class ResponsiveBottomSheetLayout extends StatelessWidget {
   final List<Widget>? actions;
   
   const ResponsiveBottomSheetLayout({
-    Key? key,
+    super.key,
     required this.title,
     required this.body,
     required this.clearAction,
     this.actions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

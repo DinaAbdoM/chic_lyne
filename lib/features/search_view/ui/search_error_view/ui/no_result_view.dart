@@ -1,6 +1,7 @@
 import 'package:chic_lyne/features/fliter_view/ui/widgets/filter_row_header.dart';
 import 'package:chic_lyne/features/home/ui/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NoResultView extends StatelessWidget {
   const NoResultView({super.key});
@@ -15,13 +16,11 @@ class NoResultView extends StatelessWidget {
             child: Column(
               children: [
                 const FilterRowHeader(),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                ), // مساحة متغيرة
+                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                 const _SearchIcon(),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 const _NoResultsText(),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 const _ExploreCategoriesButton(),
               ],
             ),

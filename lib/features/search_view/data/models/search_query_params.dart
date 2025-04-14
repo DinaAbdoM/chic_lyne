@@ -14,5 +14,19 @@ class SearchQueryParams extends FilterQueryParams {
       _$SearchQueryParamsFromJson(json);
 
   // A method to convert SearchQueryParams to a JSON map
+  @override
   Map<String, dynamic> toJson() => _$SearchQueryParamsToJson(this);
+
+
+    SearchQueryParams copyWith({
+    String? q,
+    String? sortBy,
+    String? order,
+  }) {
+    return SearchQueryParams(
+      q: q ?? this.q,
+      sortBy: sortBy ?? this.sortBy,
+      order: order ?? this.order,
+    );
+  }
 }

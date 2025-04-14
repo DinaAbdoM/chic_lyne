@@ -23,7 +23,8 @@ class ShopByCategories extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ResponsiveBackButton(),
+              ResponsiveBackButton(
+                onPressed: () => Navigator.pop(context),),
               verticalSpace(20.h),
 
               SearchTextField(

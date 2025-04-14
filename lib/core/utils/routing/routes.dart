@@ -5,6 +5,7 @@ static const String splashView = '/';
   static const String registerView = '/register';
   static const String profile = '/profile';
   static const String editProfile = '/edit-profile';
+  static const String topSalling = '/top-selling';
   static const String cartView = '/cart';
   static const String checkout = '/checkout';
   static const String orders = '/orders';

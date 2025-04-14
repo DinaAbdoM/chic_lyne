@@ -9,6 +9,9 @@ import 'package:chic_lyne/features/category/logic/cubit/category_cubit.dart';
 import 'package:chic_lyne/features/fliter_view/ui/fliter_views.dart';
 import 'package:chic_lyne/features/home/ui/home_view.dart';
 import 'package:chic_lyne/features/search_view/logic/cubit/search_products_cubit.dart';
+import 'package:chic_lyne/features/top_selling/presentation/top_selling_bloc.dart';
+import 'package:chic_lyne/features/top_selling/presentation/top_selling_event.dart';
+import 'package:chic_lyne/features/top_selling/ui/top_selling_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,8 +38,21 @@ class AppRouter {
         return _buildRoute(
           builder:
               (_) => BlocProvider(
-                create: (context) => getIt<SearchProductsCubit>()..searchProducts(args as String),
+                create:
+                    (context) =>
+                        getIt<SearchProductsCubit>()
+                          ..searchProducts(args as String),
                 child: FilterViews(),
+              ),
+        );
+      case Routes.topSalling:
+        return _buildRoute(
+          builder:
+              (_) => BlocProvider(
+                create:
+                    (_) =>
+                        getIt<TopSellingBloc>()..add(FetchTopSellingProducts()),
+                child: TopSellingSection(),
               ),
         );
       default:

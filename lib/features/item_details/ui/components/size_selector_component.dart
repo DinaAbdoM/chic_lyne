@@ -1,5 +1,4 @@
 import 'package:chic_lyne/core/widgets/generic_bottom_sheet.dart';
-import 'package:chic_lyne/features/fliter_view/ui/widgets/custom_bottom_sheet.dart';
 import 'package:chic_lyne/features/item_details/logic/cubits/size_cubit.dart';
 import 'package:chic_lyne/features/item_details/ui/components/selector_component.dart';
 import 'package:flutter/material.dart';

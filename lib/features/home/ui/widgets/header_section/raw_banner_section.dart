@@ -1,5 +1,5 @@
 import 'package:chic_lyne/core/theming/styles.dart';
-import 'package:chic_lyne/features/drawer/ui/widgets/app_drawer.dart';
+import 'package:chic_lyne/features/drawer/ui/app_drawer.dart';
 import 'package:chic_lyne/features/drawer/ui/widgets/edit_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

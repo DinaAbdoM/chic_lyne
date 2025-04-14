@@ -1,13 +1,13 @@
 import 'package:chic_lyne/features/custom_bottom_nav_bar/ui/widgets/custom_bottom_nav_bar.dart';
-import 'package:chic_lyne/features/drawer/ui/widgets/app_drawer.dart';
+import 'package:chic_lyne/features/drawer/ui/app_drawer.dart';
+// import 'package:chic_lyne/features/drawer/ui/widgets/app_drawer.dart';
 import 'package:chic_lyne/features/drawer/ui/widgets/edit_profile_view.dart';
 import 'package:chic_lyne/features/home/ui/home_view.dart';
 import 'package:chic_lyne/features/notifications/notifications.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  
-  const MainScreen({super.key, });
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -54,13 +54,11 @@ class _MainScreenState extends State<MainScreen> {
       BottomNavBarItemData(
         icon: Icons.person_outline,
         label: '',
-        page: Center(
-          child: AppDrawer(
-            user: _user,
-            onSignOutPressed: () {},
-            onEditPressed: () {},
-            onProfileUpdated: _updateUser,
-          ),
+        page: AppDrawer(
+          user: _user,
+          onSignOutPressed: () {},
+          onEditPressed: () {},
+          onProfileUpdated: _updateUser,
         ),
       ),
     ];

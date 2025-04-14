@@ -2,7 +2,6 @@ import 'package:chic_lyne/core/error/failures.dart';
 import 'package:chic_lyne/core/usecases/usecase.dart';
 import 'package:chic_lyne/features/carts/data/repo/repositories/cart_repository_interface.dart';
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 
 class DeleteCart implements UseCase<bool, CartIdParams> {
   final CartRepository repository;

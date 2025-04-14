@@ -7,8 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ColorFilterSheet extends StatelessWidget {
   final List<Map<String, dynamic>> colorOptions;
 
-  const ColorFilterSheet({Key? key, required this.colorOptions})
-    : super(key: key);
+  const ColorFilterSheet({super.key, required this.colorOptions});
 
   @override
   Widget build(BuildContext context) {

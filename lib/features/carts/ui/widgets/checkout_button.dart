@@ -5,10 +5,10 @@ class CheckoutButton extends StatelessWidget {
   final VoidCallback onCheckout;
 
   const CheckoutButton({
-    Key? key,
+    super.key,
     required this.total,
     required this.onCheckout,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

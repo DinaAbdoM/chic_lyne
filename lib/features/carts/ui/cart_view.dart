@@ -346,7 +346,7 @@ class CartView extends StatelessWidget {
                     onRemove: () => context.read<CartBloc>().add(
                       RemoveProductFromCartEvent(cart.id!, product.id!),
                     ),
-                  )).toList(),
+                  )),
                 ],
               );
             },

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'product_model.dart';
 
 part 'category_model.g.dart';
 

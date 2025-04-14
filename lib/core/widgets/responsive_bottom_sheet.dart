@@ -16,7 +16,7 @@ class ResponsiveBottomSheet extends StatefulWidget {
   final BorderRadius? borderRadius;
 
   const ResponsiveBottomSheet({
-    Key? key,
+    super.key,
     required this.title,
     required this.content,
     this.actions,
@@ -27,7 +27,7 @@ class ResponsiveBottomSheet extends StatefulWidget {
     this.enableDrag = true,
     this.backgroundColor,
     this.borderRadius,
-  }) : super(key: key);
+  });
 
   /// Static method to show the bottom sheet
   static Future<T?> show<T>({

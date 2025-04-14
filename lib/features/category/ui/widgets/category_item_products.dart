@@ -33,7 +33,9 @@ class CategoryItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ResponsiveBackButton(),
+                      ResponsiveBackButton(
+                        onPressed: () => Navigator.pop(context),
+                      ),
                       const SizedBox(height: 16),
                       Text(
                         ' $categorySlug (${products.length})',
@@ -57,10 +59,14 @@ class CategoryItem extends StatelessWidget {
                             final product = products[index];
                             return InkWell(
                               onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return  ItemDetails(product:product);
-                                }));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return ItemDetails(product: product);
+                                    },
+                                  ),
+                                );
                               },
                               child: Card(
                                 elevation: 4,
@@ -72,9 +78,10 @@ class CategoryItem extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: ClipRRect(
-                                        borderRadius: const BorderRadius.vertical(
-                                          top: Radius.circular(12),
-                                        ),
+                                        borderRadius:
+                                            const BorderRadius.vertical(
+                                              top: Radius.circular(12),
+                                            ),
                                         child: Image.network(
                                           product.thumbnail ?? '',
                                           width: double.infinity,
