@@ -1,3 +1,51 @@
+import 'package:chic_lyne/core/data/models/cart/cart_response.dart';
+import 'package:chic_lyne/features/home/data/models/product_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
+part 'cart_state.dart';
+
+class CartCubit extends Cubit<CartState> {
+  CartCubit() : super(CartInitial());
+
+  final Map<int, CartItemModel> cartData = {};
+
+  void addToCart(
+    Productss product,
+    int quantity, {
+    double discountPercentage = 0,
+  }) {
+    if (product.id == null) {
+      emit(CartError('Product id is null'));
+      return;
+    }
+    int price = product.price?.toInt() ?? 0;
+    final cartItem = CartItemModel(
+      id: product.id!,
+      product: product,
+      price: price,
+      quantity: quantity,
+      total: price * quantity,
+      discountPercentage: discountPercentage,
+      discountedPrice: price * quantity * (1 - discountPercentage ~/ 100),
+    );
+    cartData[product.id!] = cartItem;
+    emit(CartUpdated(cartData.values.toList()));
+  }
+
+  void removeFromCart(int productId) {
+    cartData.remove(productId);
+    emit(CartUpdated(cartData.values.toList()));
+  }
+
+
+  void clearCart() {
+    cartData.clear();
+    emit(CartUpdated(cartData.values.toList()));
+  }
+}
+
+
+
 // import 'package:bloc/bloc.dart';
 // import 'package:chic_lyne/core/utils/utils/cart_utils.dart';
 // import 'package:chic_lyne/features/carts/data/models/cart_model.dart';

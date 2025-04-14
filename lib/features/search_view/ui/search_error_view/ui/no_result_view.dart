@@ -8,25 +8,20 @@ class NoResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                const FilterRowHeader(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                const _SearchIcon(),
-                SizedBox(height: 10.h),
-                const _NoResultsText(),
-                SizedBox(height: 10.h),
-                const _ExploreCategoriesButton(),
-              ],
-            ),
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const _SearchIcon(),
+            SizedBox(height: 10.h),
+            const _NoResultsText(),
+            SizedBox(height: 10.h),
+            const _ExploreCategoriesButton(),
+          ],
         ),
-      ),
+      )
     );
   }
 }

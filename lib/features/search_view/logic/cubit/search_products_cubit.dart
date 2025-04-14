@@ -29,7 +29,7 @@ class SearchProductsCubit extends Cubit<SearchProductsState> {
 
   Future<void> searchProducts(String query) async {
     if (query.isEmpty) {
-      emit(SearchInitial());
+      emit(state);
       return;
     }
     params ??= SearchQueryParams(q: query); // initialize if null

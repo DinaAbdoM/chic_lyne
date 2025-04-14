@@ -1,6 +1,7 @@
 import 'package:chic_lyne/core/di/dependency_injection.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
 import 'package:chic_lyne/features/home/data/models/product_model.dart';
+import 'package:chic_lyne/features/item_details/ui/components/add_to_cart_button_component.dart';
 import 'package:chic_lyne/features/item_details/ui/components/app_bar_component.dart';
 import 'package:chic_lyne/features/item_details/ui/components/product_images_component.dart';
 import 'package:chic_lyne/features/item_details/ui/components/product_info_component.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemDetails extends StatefulWidget {
   final Productss product;
-  const ItemDetails({super.key, required this.product,});
+  const ItemDetails({super.key, required this.product});
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -89,7 +90,13 @@ class _ItemDetailsState extends State<ItemDetails> {
                         onIncrement: incrementQuantity,
                         onDecrement: decrementQuantity,
                       ),
-                      // AddToBagButtonComponent(padding: contentPadding, fontSize: buttonTextFontSize, price: widget.product.price ?? 0, quantity: quantity, product: widget.product,),
+                      AddToBagButtonComponent(
+                        padding: contentPadding,
+                        fontSize: buttonTextFontSize,
+                        price: widget.product.price ?? 0,
+                        quantity: quantity,
+                        cartModelProduct: widget.product,
+                      ),
                       SizedBox(height: isSmallScreen ? 40 : 80),
                     ],
                   ),

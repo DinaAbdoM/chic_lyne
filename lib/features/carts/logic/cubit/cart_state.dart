@@ -1,4 +1,29 @@
-// part of 'cart_cubit.dart';
+ part of 'cart_cubit.dart';
+
+
+abstract class CartState extends Equatable {
+    @override
+  List<Object> get props => [];
+}
+class CartInitial extends CartState {}
+
+class CartLoading extends CartState {}
+
+class CartLoaded extends CartState {
+  final CartModel cart;
+  CartLoaded(this.cart);
+}
+
+class CartError extends CartState {
+  final String message;
+  CartError(this.message);
+}
+
+class CartUpdated extends CartState {
+  final List<CartItemModel> cartItems;
+  CartUpdated(this.cartItems);
+}
+
 
 // enum CartStatus {
 //   initial,

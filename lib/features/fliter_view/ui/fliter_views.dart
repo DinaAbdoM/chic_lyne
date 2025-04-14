@@ -21,7 +21,13 @@ class FilterViews extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const FilterRowHeader(),
+              FilterRowHeader(
+                onSubmit: (value) {
+                  if (value != null) {
+                    context.read<SearchProductsCubit>().searchProducts(value);
+                  }
+                },
+              ),
               const MyDropdowns(),
               SizedBox(height: 20.h),
               // SearchTextField(),

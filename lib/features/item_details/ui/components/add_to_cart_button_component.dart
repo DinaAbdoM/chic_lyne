@@ -2,6 +2,7 @@ import 'package:chic_lyne/core/di/dependency_injection.dart';
 import 'package:chic_lyne/features/carts/data/models/cart_model.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
 import 'package:chic_lyne/features/carts/ui/cart_view.dart';
+import 'package:chic_lyne/features/home/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,7 @@ class AddToBagButtonComponent extends StatelessWidget {
   final double fontSize;
   final double price;
   final int quantity;
-  final CartModel cartModelProduct;
+  final Productss cartModelProduct;
 
   const AddToBagButtonComponent({
     super.key,

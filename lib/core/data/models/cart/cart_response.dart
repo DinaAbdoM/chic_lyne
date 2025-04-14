@@ -1,4 +1,5 @@
 import 'package:chic_lyne/core/data/models/base_response.dart';
+import 'package:chic_lyne/features/home/data/models/product_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cart_response.g.dart';
@@ -80,7 +81,7 @@ class CartItemModel {
   // الاي دي بتاع المنتج
   final int id;
   // اسم المنتج
-  final String title;
+  final Productss? product;
   // سعر المنتج الواحد
   final int price;
   // الكمية الموجودة من المنتج ده في العربة
@@ -95,7 +96,7 @@ class CartItemModel {
   // الكونستركتور بتاع الكلاس، بياخد كل بيانات المنتج في العربة
   CartItemModel({
     required this.id,
-    required this.title,
+    required this.product,
     required this.price,
     required this.quantity,
     required this.total,

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FilterRowHeader extends StatelessWidget {
-  const FilterRowHeader({super.key});
+  const FilterRowHeader({super.key, this.onSubmit});
+  final Function(String? value)? onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,12 @@ class FilterRowHeader extends StatelessWidget {
       children: [
         ResponsiveBackButton(onPressed: () => Navigator.pop(context)),
         SizedBox(width: 10.w),
-        SearchTextField(suffixIcon: Icons.close),
+        Expanded(
+          child: SearchTextField(
+            suffixIcon: Icons.close,
+            onSubmitted: onSubmit, 
+          ),
+        ),
       ],
     );
   }
