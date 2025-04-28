@@ -245,9 +245,10 @@
 //     ).showSnackBar(const SnackBar(content: Text('Checkout initiated')));
 //   }
 // }
-import 'package:chic_lyne/core/di/dependency_injection.dart';
+import 'package:chic_lyne/core/data/models/cart/cart_response.dart';
+import 'package:chic_lyne/core/widgets/cart_listener_widget.dart';
 import 'package:chic_lyne/features/carts/domain/entities/cart.dart';
-import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
+import 'package:chic_lyne/features/carts/logic/cubit/cart_cubit.dart';
 import 'package:chic_lyne/features/carts/ui/widgets/cart_item_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -257,40 +258,29 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<CartBloc>()..add(GetAllCartsEvent()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Cart'),
-          actions: [
-            BlocBuilder<CartBloc, CartState>(
-              builder: (context, state) {
-                if (state is AllCartsLoaded && state.carts.isNotEmpty) {
-                  return IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () => context.read<CartBloc>().add(
-                      ClearCartEvent(state.carts.first.id!), // Use actual cart ID
-                    ),
-                    tooltip: 'Clear Cart',
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-          ],
-        ),
-        body: BlocConsumer<CartBloc, CartState>(
-          listener: (context, state) {
-            if (state is CartError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cart'),
+        actions: [
+          BlocBuilder<CartCubit, CartState>(
+            builder: (context, state) {
+              final cubit = context.read<CartCubit>();
+              if (cubit.cartData.isNotEmpty) {
+                return IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () => cubit.clearCart(),
+                  tooltip: 'Clear Cart',
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
+      body: CartListenerWidget(
+        child: BlocBuilder<CartCubit, CartState>(
           builder: (context, state) {
+            final cubit = context.read<CartCubit>();
             if (state is CartLoading) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -299,57 +289,43 @@ class CartView extends StatelessWidget {
               return Center(child: Text(state.message));
             }
 
-            if (state is AllCartsLoaded) {
-              return _buildCartContent(context, state.carts);
-            }
+            return _buildCartContent(context, cubit.cartData.values.toList());
 
-            return const Center(child: Text('Unknown state'));
+            // if (state is CartLoaded) {
+            // }
+
+            // return const Center(child: Text('Unknown state'));
           },
         ),
       ),
     );
   }
 
-  Widget _buildCartContent(BuildContext context, List<Cart> carts) {
+  Widget _buildCartContent(BuildContext context, List<CartItemModel> carts) {
     if (carts.isEmpty) {
       return _buildEmptyCartView(context);
     }
 
     // Show all carts and their products
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: carts.length,
-            itemBuilder: (context, cartIndex) {
-              final cart = carts[cartIndex];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (carts.length > 1) // Show cart header only if multiple carts
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Cart ${cartIndex + 1}',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                  ...cart.products!.map((product) => CartItemTile(
-                    product: product,
-                    cartId: cart.id!,
-                    onIncrease: () => context.read<CartBloc>().add(
-                      IncrementProductQuantityEvent(cart.id!, product.id!),
-                    ),
-                    onDecrease: () => context.read<CartBloc>().add(
-                      DecrementProductQuantityEvent(cart.id!, product.id!),
-                    ),
-                    onRemove: () => context.read<CartBloc>().add(
-                      RemoveProductFromCartEvent(cart.id!, product.id!),
-                    ),
-                  )),
-                ],
-              );
-            },
+        ...carts.map(
+          (model) => CartItemTile(
+            item: model,
+            cartId: model.id,
+            onIncrease:
+                () => context.read<CartCubit>().incrementQuantity(
+                  model.product!.id!,
+                ),
+            onDecrease:
+                () => context.read<CartCubit>().decrementQuantity(
+                  model.product!.id!,
+                ),
+            onRemove:
+                () => context.read<CartCubit>().removeFromCart(
+                  model.product!.id!,
+                ),
           ),
         ),
         _buildCartSummary(context, carts), // Updated to handle multiple carts
@@ -362,7 +338,11 @@ class CartView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.grey),
+          const Icon(
+            Icons.shopping_cart_outlined,
+            size: 64,
+            color: Colors.grey,
+          ),
           const SizedBox(height: 16),
           const Text('Your cart is empty'),
           const SizedBox(height: 16),
@@ -375,13 +355,14 @@ class CartView extends StatelessWidget {
     );
   }
 
-  Widget _buildCartSummary(BuildContext context, List<Cart> carts) {
+  Widget _buildCartSummary(BuildContext context, List<CartItemModel> carts) {
     // Calculate totals across all carts
     double subtotal = carts.fold(0, (sum, cart) => sum + (cart.total ?? 0));
-    double discount = carts.fold(0, (sum, cart) => 
-      sum + ((cart.discountedTotal != null && cart.total != null)
-        ? (cart.total! - cart.discountedTotal!)
-        : 0));
+    double discount = carts.fold(
+      0,
+      (sum, cart) =>
+          sum + (cart.total - (cart.discountedPrice * cart.quantity)),
+    );
     const shippingCost = 5.0; // Could be calculated per cart
     double total = subtotal - discount + shippingCost;
 
@@ -411,7 +392,8 @@ class CartView extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => _checkout(context, carts.map((c) => c.id!).toList()),
+              onPressed:
+                  () => _checkout(context, carts.map((c) => c.id).toList()),
               child: const Text('Proceed to Checkout'),
             ),
           ),

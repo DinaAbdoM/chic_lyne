@@ -1,6 +1,7 @@
 import 'package:chic_lyne/core/di/dependency_injection.dart';
 import 'package:chic_lyne/features/carts/data/models/cart_model.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
+import 'package:chic_lyne/features/carts/logic/cubit/cart_cubit.dart';
 import 'package:chic_lyne/features/carts/ui/cart_view.dart';
 import 'package:chic_lyne/features/home/data/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class AddToBagButtonComponent extends StatelessWidget {
     required this.fontSize,
     required this.price,
     required this.quantity,
-     required this.cartModelProduct,
+    required this.cartModelProduct,
   });
 
   @override
@@ -42,7 +43,7 @@ class AddToBagButtonComponent extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             try {
-              final cartCubit = getIt<CartBloc>();
+              // final cartCubit = getIt<CartBloc>();
               // final cartProduct = Product(
               //   id: product.id ?? 0,
               //   title: product.title ?? '',
@@ -59,15 +60,19 @@ class AddToBagButtonComponent extends StatelessWidget {
               // );
 
               // await cartCubit.addProduct(cartProduct);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => BlocProvider.value(
-                        value: cartCubit,
-                        child: const CartView(),
-                      ),
-                ),
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder:
+              //         (context) => BlocProvider.value(
+              //           value: cartCubit,
+              //           child: const CartView(),
+              //         ),
+              //   ),
+              // );
+              context.read<CartCubit>().addToCart(
+                product: cartModelProduct,
+                quantity: quantity,
               );
             } catch (e) {
               ScaffoldMessenger.of(

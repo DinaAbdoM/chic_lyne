@@ -1,4 +1,5 @@
 import 'package:chic_lyne/core/theming/styles.dart';
+import 'package:chic_lyne/features/carts/ui/cart_view.dart';
 import 'package:chic_lyne/features/drawer/ui/app_drawer.dart';
 import 'package:chic_lyne/features/drawer/ui/widgets/edit_profile_view.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,11 @@ class _RawBannerSectionState extends State<RawBannerSection> {
           color: Colors.white,
           size: 20,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CartView()),
+          );
+        },
       ),
     );
   }

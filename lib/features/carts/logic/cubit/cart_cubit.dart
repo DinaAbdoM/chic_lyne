@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chic_lyne/core/data/models/cart/cart_response.dart';
 import 'package:chic_lyne/features/home/data/models/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,16 +11,23 @@ class CartCubit extends Cubit<CartState> {
 
   final Map<int, CartItemModel> cartData = {};
 
-  void addToCart(
-    Productss product,
-    int quantity, {
+  void addToCart({
+    required Productss product,
+    required int quantity,
     double discountPercentage = 0,
   }) {
     if (product.id == null) {
       emit(CartError('Product id is null'));
       return;
     }
+
+    final existingItem = cartData[product.id!];
+    if (existingItem != null && existingItem.quantity == quantity) {
+      emit(CartError('Product already in cart'));
+      return;
+    }
     int price = product.price?.toInt() ?? 0;
+
     final cartItem = CartItemModel(
       id: product.id!,
       product: product,
@@ -29,18 +38,35 @@ class CartCubit extends Cubit<CartState> {
       discountedPrice: price * quantity * (1 - discountPercentage ~/ 100),
     );
     cartData[product.id!] = cartItem;
-    emit(CartUpdated(cartData.values.toList()));
+    emit(AddToCartState(cartData.values.toList()));
+  }
+
+  void incrementQuantity(int productId) {
+    var cartItem = cartData[productId];
+    if (cartItem != null) {
+      cartItem = cartItem.copyWith(quantity: cartItem.quantity + 1);
+      cartData[productId] = cartItem;
+      emit(UpdateProductQuantityState());
+    }
+  }
+
+  void decrementQuantity(int productId) {
+    var cartItem = cartData[productId];
+    if (cartItem != null && cartItem.quantity > 1) {
+      cartItem = cartItem.copyWith(quantity: cartItem.quantity - 1);
+      cartData[productId] = cartItem;
+      emit(UpdateProductQuantityState());
+    }
   }
 
   void removeFromCart(int productId) {
     cartData.remove(productId);
-    emit(CartUpdated(cartData.values.toList()));
+    emit(AddToCartState(cartData.values.toList()));
   }
-
 
   void clearCart() {
     cartData.clear();
-    emit(CartUpdated(cartData.values.toList()));
+    emit(ClearCartState());
   }
 }
 

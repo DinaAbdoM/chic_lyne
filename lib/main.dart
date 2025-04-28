@@ -1,5 +1,6 @@
 import 'package:chic_lyne/core/di/dependency_injection.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
+import 'package:chic_lyne/features/carts/logic/cubit/cart_cubit.dart';
 import 'package:chic_lyne/features/category/logic/cubit/category_cubit.dart';
 import 'package:chic_lyne/features/custom_bottom_nav_bar/ui/widgets/ui/main_screen.dart';
 import 'package:chic_lyne/features/fliter_view/logic/filter_cubit/filter_cubit.dart';
@@ -59,6 +60,8 @@ class MyApp extends StatelessWidget {
                 create: (_) => getIt<CategoryCubit>()..fetchCategories(),
               ),
               BlocProvider(create: (_) => getIt<SearchProductsCubit>()),
+              BlocProvider(create: (_) => getIt<CartCubit>()),
+
               // BlocProvider(create: (_) => getIt<CartCubit>()..loadCart()),
               // BlocProvider(
               //   create: (context) {

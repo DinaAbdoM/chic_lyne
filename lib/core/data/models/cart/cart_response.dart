@@ -107,4 +107,24 @@ class CartItemModel {
   // دي الفانكشن اللي بتحول الخريطة اللي جاية من الـ API لأوبجكت من الكلاس ده
   factory CartItemModel.fromJson(Map<String, dynamic> json) =>
       _$CartItemModelFromJson(json);
+
+  CartItemModel copyWith({
+    int? id,
+    Productss? product,
+    int? price,
+    int? quantity,
+    int? total,
+    double? discountPercentage,
+    int? discountedPrice,
+  }) {
+    return CartItemModel(
+      id: id ?? this.id,
+      product: product ?? this.product,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      total: total ?? this.total,
+      discountPercentage: discountPercentage ?? this.discountPercentage,
+      discountedPrice: discountedPrice ?? this.discountedPrice,
+    );
+  }
 }

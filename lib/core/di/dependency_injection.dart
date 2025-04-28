@@ -10,6 +10,7 @@ import 'package:chic_lyne/features/carts/domain/usecases/get_cart_by_id_use_case
     show GetCartById;
 import 'package:chic_lyne/features/carts/domain/usecases/get_cart_by_user_use_case.dart';
 import 'package:chic_lyne/features/carts/logic/bloc/cart_bloc.dart';
+import 'package:chic_lyne/features/carts/logic/cubit/cart_cubit.dart';
 import 'package:chic_lyne/features/category/logic/cubit/category_cubit.dart';
 import 'package:chic_lyne/features/fliter_view/data/apis/sort_by_api_service.dart';
 import 'package:chic_lyne/features/fliter_view/data/repos/sort_by.dart';
@@ -177,4 +178,8 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton(() => ProductService());
 
   getIt.registerLazySingleton(() => ApiService());
+
+
+  getIt.registerLazySingleton(() => CartCubit());
+
 }
