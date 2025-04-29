@@ -42,9 +42,10 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
 CartItemModel _$CartItemModelFromJson(Map<String, dynamic> json) =>
     CartItemModel(
       id: (json['id'] as num).toInt(),
-      product: json['product'] == null
-          ? null
-          : Productss.fromJson(json['product'] as Map<String, dynamic>),
+      product:
+          json['product'] == null
+              ? null
+              : Productss.fromJson(json['product'] as Map<String, dynamic>),
       price: (json['price'] as num).toInt(),
       quantity: (json['quantity'] as num).toInt(),
       total: (json['total'] as num).toInt(),

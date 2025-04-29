@@ -1,6 +1,7 @@
 import 'package:chic_lyne/core/network/dio_client.dart';
 import 'package:chic_lyne/core/network/network_info.dart';
-import 'package:chic_lyne/core/utils/cart_utils.dart';
+import 'package:chic_lyne/features/auth/login/data/repositories/auth_repo.dart';
+import 'package:chic_lyne/features/auth/login/logic/cubits/login_cubit.dart';
 import 'package:chic_lyne/features/carts/data/datasources/cart_remote_datasource.dart';
 import 'package:chic_lyne/features/carts/data/repo/repositories/cart_repository.dart';
 import 'package:chic_lyne/features/carts/data/repo/repositories/cart_repository_interface.dart';
@@ -139,8 +140,8 @@ Future<void> initDependencies() async {
     getIt.registerLazySingleton(() {
       final dio = Dio();
       dio.options.baseUrl = 'https://dummyjson.com';
-      dio.options.connectTimeout = const Duration(seconds: 5);
-      dio.options.receiveTimeout = const Duration(seconds: 5);
+      dio.options.connectTimeout = const Duration(seconds: 30);
+      dio.options.receiveTimeout = const Duration(seconds: 30);
       dio.options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -181,5 +182,7 @@ Future<void> initDependencies() async {
 
 
   getIt.registerLazySingleton(() => CartCubit());
-
+  // login
+  getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));
+  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt()));
 }
